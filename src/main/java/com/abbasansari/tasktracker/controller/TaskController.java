@@ -2,6 +2,8 @@ package com.abbasansari.tasktracker.controller;
 
 import com.abbasansari.tasktracker.dto.TaskRequestDto;
 import com.abbasansari.tasktracker.model.Task;
+import com.abbasansari.tasktracker.service.MailService;
+import com.abbasansari.tasktracker.service.SchedulerService;
 import com.abbasansari.tasktracker.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +30,11 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
+    @PutMapping("/complete/{id}")
+    public String mark(@PathVariable Long id) {
+        taskService.completeTask(id);
+        return "Task marked as completed";
+    }
+    
 }
 
