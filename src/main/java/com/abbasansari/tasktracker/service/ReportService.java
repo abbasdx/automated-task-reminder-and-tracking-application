@@ -20,8 +20,7 @@ public class ReportService {
         int totalTasks = tasks.size();
         int completedTasks = 0;
 
-        for (int i = 0; i < totalTasks; i++) {
-            Task task = tasks.get(i);
+        for (Task task : tasks) {
             if (task.isCompleted()) {
                 completedTasks++;
             }
