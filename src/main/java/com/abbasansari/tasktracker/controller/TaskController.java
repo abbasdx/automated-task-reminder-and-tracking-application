@@ -28,12 +28,6 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    @PutMapping("/complete/{id}")
-    public String mark(@PathVariable Long id) {
-        taskService.completeTask(id);
-        return "Task marked as completed";
-    }
-
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         taskService.deleteTask(id);
