@@ -25,4 +25,10 @@ public class Task {
     private LocalDateTime dueDate;
     private boolean completed;
 
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
 }
