@@ -22,7 +22,9 @@ public class TaskService {
                 dto.getTitle(),
                 dto.getDescription(),
                 dto.getDueDate(),
-                false
+                false,
+                dto.getPriority(),
+                dto.getCategory()
         );
         repository.save(task);
     }
