@@ -1,5 +1,6 @@
 package com.abbasansari.tasktracker.service;
 
+import com.abbasansari.tasktracker.model.Task;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,17 @@ public class MailService {
 
     public MailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
+    }
+
+    public void sendReminder(Task task) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("abbasxansari@gmail.com");
+        message.setSubject("Task Reminder");
+        message.setText(
+                "Reminder: " + task.getTitle() +
+                        "\nDue at: " + task.getDueDate()
+        );
+        mailSender.send(message);
     }
 
     public void sendTestMail() {
