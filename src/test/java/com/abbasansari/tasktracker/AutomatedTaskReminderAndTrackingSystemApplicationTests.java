@@ -1,4 +1,4 @@
-package com.abbasansari.taskreminder;
+package com.abbasansari.tasktracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
