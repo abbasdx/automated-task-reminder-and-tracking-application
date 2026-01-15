@@ -339,7 +339,7 @@ If you want to contribute to this project, please follow these steps:
 
 MIT License
 
-Copyright (c) 2026 Abbas Dev
+Copyright (c) 2026 Abbas Ansari
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
