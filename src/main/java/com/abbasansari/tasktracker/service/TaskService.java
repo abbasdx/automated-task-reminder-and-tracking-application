@@ -11,9 +11,11 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository repository;
+    private SchedulerService schedulerService;
 
-    public TaskService(TaskRepository repository) {
+    public TaskService(TaskRepository repository, SchedulerService schedulerService) {
         this.repository = repository;
+        this.schedulerService = schedulerService;
     }
 
     public void createTask(TaskRequestDto dto) {
@@ -26,7 +28,8 @@ public class TaskService {
                 dto.getPriority(),
                 dto.getCategory()
         );
-        repository.save(task);
+        Task saved = repository.save(task);
+        schedulerService.scheduleReminder(saved);
     }
 
     public void deleteTask(Long id) {
