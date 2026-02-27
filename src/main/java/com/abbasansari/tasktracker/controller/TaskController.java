@@ -4,6 +4,7 @@ import com.abbasansari.tasktracker.dto.TaskRequestDto;
 import com.abbasansari.tasktracker.model.Task;
 import com.abbasansari.tasktracker.service.MailService;
 import com.abbasansari.tasktracker.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public String add(@RequestBody TaskRequestDto dto) {
+    public String add(@Valid @RequestBody TaskRequestDto dto) {
         taskService.createTask(dto);
         return "Task added successfully";
     }
