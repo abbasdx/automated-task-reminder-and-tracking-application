@@ -2,23 +2,25 @@ package com.abbasansari.tasktracker.service;
 
 import com.abbasansari.tasktracker.dto.TaskRequestDto;
 import com.abbasansari.tasktracker.model.Task;
+import com.abbasansari.tasktracker.model.User;
 import com.abbasansari.tasktracker.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TaskService {
+public class TaskService implements ITaskService {
 
     private final TaskRepository repository;
-    private SchedulerService schedulerService;
+    private final SchedulerService schedulerService;
 
     public TaskService(TaskRepository repository, SchedulerService schedulerService) {
         this.repository = repository;
         this.schedulerService = schedulerService;
     }
 
-    public void createTask(TaskRequestDto dto) {
+    @Override
+    public Task createTask(TaskRequestDto dto, User user) {
         Task task = new Task(
                 null,
                 dto.getTitle(),
@@ -26,27 +28,34 @@ public class TaskService {
                 dto.getDueDate(),
                 false,
                 dto.getPriority(),
-                dto.getCategory()
+                dto.getCategory(),
+                user
         );
         Task saved = repository.save(task);
         schedulerService.scheduleReminder(saved);
+        return saved;
     }
 
-    public void deleteTask(Long id) {
-        repository.deleteById(id);
+    @Override
+    public void deleteTask(Long id, User user) {
+        Task task = getTaskById(id, user);
+        repository.delete(task);
     }
 
-    public List<Task> getAllTasks() {
-        return repository.findAll();
+    @Override
+    public List<Task> getAllTasks(User user) {
+        return repository.findByUser(user);
     }
 
-    public Task getTask(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+    @Override
+    public Task getTaskById(Long id, User user) {
+        return repository.findByIdAndUser(id, user)
+                .orElseThrow(() -> new RuntimeException("Task not found or access denied"));
     }
 
-    public void completeTask(Long id) {
-        Task task = getTask(id);
+    @Override
+    public void completeTask(Long id, User user) {
+        Task task = getTaskById(id, user);
         task.setCompleted(true);
         repository.save(task);
     }
