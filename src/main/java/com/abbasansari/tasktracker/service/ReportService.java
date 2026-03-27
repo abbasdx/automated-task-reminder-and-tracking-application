@@ -2,7 +2,9 @@ package com.abbasansari.tasktracker.service;
 
 import com.abbasansari.tasktracker.dto.OverviewResponseDto;
 import com.abbasansari.tasktracker.model.Task;
+import com.abbasansari.tasktracker.model.User;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -14,8 +16,8 @@ public class ReportService {
         this.taskService = taskService;
     }
 
-    public OverviewResponseDto overview() {
-        List<Task> tasks = taskService.getAllTasks();
+    public OverviewResponseDto overview(User user) {
+        List<Task> tasks = taskService.getAllTasks(user);
 
         int totalTasks = tasks.size();
         int completedTasks = 0;
@@ -28,11 +30,6 @@ public class ReportService {
 
         int pendingTasks = totalTasks - completedTasks;
 
-        return new OverviewResponseDto(
-                totalTasks,
-                completedTasks,
-                pendingTasks
-        );
+        return new OverviewResponseDto(totalTasks, completedTasks, pendingTasks);
     }
 }
-
