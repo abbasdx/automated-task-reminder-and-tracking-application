@@ -43,6 +43,19 @@ public class TaskService implements ITaskService {
     }
 
     @Override
+    public Task updateTask(Long id, TaskRequestDto dto, User user) {
+        Task task = repository.findByIdAndUser(id, user)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setDueDate(dto.getDueDate());
+        task.setPriority(dto.getPriority());
+        task.setCategory(dto.getCategory());
+
+        return repository.save(task);
+    }
+
+    @Override
     public List<Task> getAllTasks(User user) {
         return repository.findByUser(user);
     }
@@ -57,6 +70,13 @@ public class TaskService implements ITaskService {
     public void completeTask(Long id, User user) {
         Task task = getTaskById(id, user);
         task.setCompleted(true);
+        repository.save(task);
+    }
+
+    @Override
+    public void incompleteTask(Long id, User user) {
+        Task task = getTaskById(id, user);
+        task.setCompleted(false);
         repository.save(task);
     }
 }
