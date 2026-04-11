@@ -11,5 +11,7 @@ public interface ITaskService {
     Task getTaskById(Long id, User user);
     List<Task> getAllTasks(User user);
     void deleteTask(Long id, User user);
+    Task updateTask(Long id, TaskRequestDto dto, User user);
     void completeTask(Long id, User user);
+    void incompleteTask(Long id, User user);
 }
