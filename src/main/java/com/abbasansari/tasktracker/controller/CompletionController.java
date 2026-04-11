@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/completion")
+@RequestMapping("/tasks")
 public class CompletionController {
 
     private final ITaskService taskService;
@@ -18,10 +18,17 @@ public class CompletionController {
         this.authUtil = authUtil;
     }
 
-    @PutMapping("/mark/{id}")
-    public ResponseEntity<String> mark(@PathVariable Long id) {
+    @PutMapping("/{id}/complete")
+    public ResponseEntity<String> complete(@PathVariable Long id) {
         User user = authUtil.getCurrentUser();
         taskService.completeTask(id, user);
         return ResponseEntity.ok("Task marked as completed");
+    }
+
+    @PutMapping("/{id}/incomplete")
+    public ResponseEntity<String> incomplete(@PathVariable Long id) {
+        User user = authUtil.getCurrentUser();
+        taskService.incompleteTask(id, user);
+        return ResponseEntity.ok("Task marked as incomplete");
     }
 }
