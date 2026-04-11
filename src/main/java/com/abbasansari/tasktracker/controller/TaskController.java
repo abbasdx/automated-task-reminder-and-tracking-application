@@ -51,10 +51,16 @@ public class TaskController {
         return ResponseEntity.ok("Task deleted successfully");
     }
 
-    @GetMapping("/test-mail")
-    public ResponseEntity<String> testMail() {
-        String userEmail = authUtil.getCurrentUser().getEmail();
-        mailService.sendTestMail(userEmail);
-        return ResponseEntity.ok("Test mail sent to " + userEmail);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Task> update(@Valid @PathVariable Long id, @RequestBody TaskRequestDto dto) {
+        User user = authUtil.getCurrentUser();
+        return  ResponseEntity.ok(taskService.updateTask(id, dto, user));
     }
+
+//    @GetMapping("/test-mail")
+//    public ResponseEntity<String> testMail() {
+//        String userEmail = authUtil.getCurrentUser().getEmail();
+//        mailService.sendTestMail(userEmail);
+//        return ResponseEntity.ok("Test mail sent to " + userEmail);
+//    }
 }
