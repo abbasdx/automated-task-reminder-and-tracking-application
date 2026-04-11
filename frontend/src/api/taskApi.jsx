@@ -48,9 +48,13 @@ export const register = (data) => api.post(`/auth/signup`, data);
 
 export const addTask      = (task) => api.post(`/tasks/add`, task);
 export const deleteTask   = (id)   => api.delete(`/tasks/delete/${id}`);
+export const updateTask = (id, task) => api.put(`/tasks/update/${id}`, task);
 export const getTasks     = ()     => api.get(`/tasks/list`);
-export const completeTask = (id)   => api.put(`/completion/mark/${id}`);
 export const sendTestMail = ()     => api.get(`/tasks/test-mail`);
+
+export const completeTask = (id) => api.put(`/tasks/${id}/complete`);
+
+export const incompleteTask = (id) => api.put(`/tasks/${id}/incomplete`);
 
 export const getOverview  = () => api.get(`/reports/overview`);
 export const addAiTask    = (prompt) => api.post(`/tasks/gemini/add`, { prompt });
