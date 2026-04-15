@@ -9,4 +9,5 @@ public class AuthResponseDto {
     private String token;
     private String email;
     private String name;
+    private boolean emailVerified;
 }
