@@ -153,6 +153,16 @@ export default function OtpModal({ isOpen, onClose, user, onSuccess }) {
                     {countdown > 0 ? `Resend in ${countdown}s` : "Resend OTP"}
                   </button>
                 </div>
+                
+                {/* SKIP BUTTON ADDED HERE */}
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="mt-1 flex w-full cursor-pointer items-center justify-center rounded-xl bg-transparent px-8 py-3 text-sm font-medium text-slate-400 transition-all hover:bg-white/[0.04] hover:text-slate-200 active:scale-95"
+                >
+                  Skip, I'll verify later
+                </button>
+                
               </div>
             </form>
           </motion.div>
