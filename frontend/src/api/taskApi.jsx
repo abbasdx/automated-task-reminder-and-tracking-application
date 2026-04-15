@@ -52,8 +52,10 @@ export const updateTask = (id, task) => api.put(`/tasks/update/${id}`, task);
 export const getTasks     = ()     => api.get(`/tasks/list`);
 export const sendTestMail = ()     => api.get(`/tasks/test-mail`);
 
+// FIXED: Matches your backend @PutMapping("/{id}/complete")
 export const completeTask = (id) => api.put(`/tasks/${id}/complete`);
 
+// ADDED: Matches your backend @PutMapping("/{id}/incomplete")
 export const incompleteTask = (id) => api.put(`/tasks/${id}/incomplete`);
 
 export const getOverview  = () => api.get(`/reports/overview`);
@@ -64,3 +66,17 @@ export const exportCsv = () => {
   const token = getToken();
   window.open(`${API_BASE}/reports/export?token=${token}`, "_blank");
 };
+
+/* ── OTP Verification ─────────────────────────────────── */
+
+export const sendOtp = (email) =>
+  api.post(
+    `/verification/otp?email=${encodeURIComponent(email)}`
+  );
+
+export const verifyOtp = (email, otp) =>
+  api.post(
+    `/verification/verify?email=${encodeURIComponent(
+      email
+    )}&otp=${otp}`
+  );
