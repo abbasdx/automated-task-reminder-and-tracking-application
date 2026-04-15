@@ -44,7 +44,8 @@ public class AuthService implements IAuthService {
                 null,
                 dto.getName(),
                 dto.getEmail(),
-                passwordEncoder.encode(dto.getPassword())
+                passwordEncoder.encode(dto.getPassword()),
+                false
         );
 
         userRepository.save(user);
@@ -52,7 +53,7 @@ public class AuthService implements IAuthService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         String token = jwtUtil.generateToken(userDetails);
 
-        return new AuthResponseDto(token, user.getEmail(), user.getName());
+        return new AuthResponseDto(token, user.getEmail(), user.getName(), user.isEmailVerified());
     }
 
     @Override
@@ -67,6 +68,6 @@ public class AuthService implements IAuthService {
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return new AuthResponseDto(token, user.getEmail(), user.getName());
+        return new AuthResponseDto(token, user.getEmail(), user.getName(), user.isEmailVerified());
     }
 }
